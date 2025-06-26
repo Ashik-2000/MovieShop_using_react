@@ -1,9 +1,17 @@
+import Header from "./Header";
+import Sidebar from "./Sidebar";
+import MovieList from "./cine/MovieList";
+
 function App() {
     return (
         <>
-            <h1 className="text-3xl text-center text-red-700">
-                Wellcome to new project
-            </h1>
+            <Header />
+            <main>
+                <div className="container grid lg:grid-cols-[218px_1fr] gap-[3.5rem]">
+                    <Sidebar />
+                    <MovieList />
+                </div>
+            </main>
         </>
     );
 }
