@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { MovieContext } from "../context";
 import { getImgUrl } from "../utils/cine-utilites";
 import MovieDetailsModal from "./MovieDetailsModal";
 import Rating from "./Rating";
@@ -6,13 +7,27 @@ import Rating from "./Rating";
 export default function MovieCard({ movie }) {
     const [shoModal, setShowModal] = useState(false);
     const [selectedMovie, setSelectedMovie] = useState(null);
+    const { cartData, setCartData } = useContext(MovieContext);
+
     const handleModalClose = () => {
         setShowModal(!shoModal);
         setSelectedMovie(null);
     };
+
     const handleMovieSelection = (movie) => {
         setSelectedMovie(movie);
         setShowModal(!shoModal);
+    };
+
+    const handleAddToCart = (e, movie) => {
+        e.stopPropagation();
+        const found = cartData.find((item) => item.id === movie.id);
+
+        if (!found) {
+            setCartData([...cartData, movie]);
+        } else {
+            alert(`The movie: ${movie.title} is already in the cart`);
+        }
     };
     return (
         <>
@@ -20,6 +35,7 @@ export default function MovieCard({ movie }) {
                 <MovieDetailsModal
                     movie={selectedMovie}
                     onClose={handleModalClose}
+                    onAddCart={handleAddToCart}
                 />
             )}
             <figure className="p-4 border border-black/10 shadow-sm dark:border-white/10 rounded-xl">
@@ -40,6 +56,7 @@ export default function MovieCard({ movie }) {
                         <a
                             className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
                             href="#"
+                            onClick={(e) => handleAddToCart(e, movie)}
                         >
                             <img src="./assets/tag.svg" alt="" />
                             <span>${movie.price} | Add to Cart</span>
