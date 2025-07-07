@@ -13,7 +13,7 @@ A simple Movie buying site desing with cool interactions and features.
 
 ## 🧩 Component Tree
 
-![Component structure and data flow]()
+![Component structure and data flow](./movie_shop.drawio.png)
 
 ---
 
